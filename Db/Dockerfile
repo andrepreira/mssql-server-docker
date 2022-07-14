@@ -6,6 +6,9 @@ WORKDIR /usr/src/app
 
 # Copy initialization scripts
 COPY . /usr/src/app
+
+# Create data directory
+WORKDIR /usr/src/app/data
              
 # Set environment variables, not to have to write them with docker run command
 # Note: make sure that your password matches what is in the run-initialization script 
