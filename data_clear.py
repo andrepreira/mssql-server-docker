@@ -1,23 +1,13 @@
-import csv
-
 path = "../base_relacionamento/"
 
-file = path + "parentes_incompleto.csv"
+file = "parentes.csv"
 
-new_file = open(path + "parentes_incompleto_limpo.csv", 'w+')
+new_file = "parentes_limpo.csv"
 
-writer_new_file = csv.writer(new_file)
+with open(path + file, encoding='latin-1')\
+    as arquivo, open(path + new_file, 'w+') as arquivo_limpo:
+    for ix, linha in enumerate(arquivo):
+        if ix > 5931:
+            arquivo_limpo.write(linha.replace('\x00', ''))
 
-def fix_nulls(s):
-    for line in s:
-        yield line.replace('\x00', '')
-
-# nome colunas => CPF', 'NOME', 'NOME_VINCULO', 'CPF_VINCULO_9', 'VINCULO', 'CPF_Completo', 'CPF_VINCULO'
-with open(file, encoding="latin-1") as csvfile:
-    reader = csv.reader(fix_nulls(csvfile), delimiter= ';')
-    count = 0
-    for row in reader:
-        count+=1
-        if count >= 5392:
-            print(row, count)
-            writer_new_file.writerow(row)
+print('Fim da limpeza de dados!!')
